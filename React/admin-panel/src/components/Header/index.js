@@ -25,10 +25,12 @@ const Header = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [isOpenNotificationDrop, setIsOpenNotificationsDrop] = React.useState(false);
     const [isOpenMailDrop, setIsOpenMailDrop] =React.useState(false);
+    const [isOpenCartDrop, setIsOpenCartDrop] = React.useState(false);
 
     const openMyAcc = Boolean(anchorEl);
     const openMyNotifications = Boolean(isOpenNotificationDrop);
     const openMyMail = Boolean(isOpenMailDrop);
+    const openMyCart = Boolean(isOpenCartDrop);
 
     const context = useContext(MyContext);
 
@@ -49,6 +51,12 @@ const Header = () => {
     };
     const handleCloseMailDrop = () =>{
         setIsOpenMailDrop(false);
+    };
+    const handleOpenCartDrop = () =>{
+        setIsOpenCartDrop(true);
+    };
+    const handleCloseCartDrop = () =>{
+        setIsOpenCartDrop(false);
     };
     return(
         <>
@@ -71,7 +79,52 @@ const Header = () => {
                         </div>
                         <div className="col-sm-7 d-flex align-items-center justify-content-end part3">
                             <Button className="rounded-circle mr-3"><MdOutlineLightMode/></Button>
-                            <Button className="rounded-circle mr-3"><PiShoppingBagBold/></Button>
+                            <div className="dropdownWrapper position-relative">
+                                <Button className="rounded-circle mr-3" onClick={handleOpenCartDrop}><PiShoppingBagBold/></Button>
+                                <Menu
+                                        anchorEl={isOpenNotificationDrop}
+                                        className="notifications dropdown_list"
+                                        id="notifications"
+                                        open={openMyCart}
+                                        onClose={handleCloseCartDrop}
+                                        onClick={handleCloseCartDrop}
+                                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                    >
+                                        <div className="head ps-3 pl-0">
+                                            <h4>My Cart (1)</h4>
+                                        </div>
+
+                                        <Divider style={{ background: 'black' }} variant="middle" />
+                                        
+                                        <div className="scroll">
+                                            <MenuItem onClick={handleCloseCartDrop}>
+                                                <div className="d-flex">
+                                                <div>
+                                                    <div className="userImg">
+                                                        <span className="rounded-circle">
+                                                            <img src = "https://i5.walmartimages.com/asr/14132443-17ab-49e1-98f7-16ad97706690_1.9417839dc6954ccf0ebd8ee60b72e79a.jpeg"/>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="dropDownInfo">
+                                                    <h4>
+                                                        <span>
+                                                            <b>Teddy Bear</b>
+                                                            Details of Teddy Bear
+                                                            <b> Price, Quantity etc</b>
+                                                        </span>
+                                                    </h4>
+                                                    <p className="text-sky">1 item in cart</p>
+                                                </div>
+                                                </div>
+                                            </MenuItem>
+                                        </div>
+                                        <div className="ps-2 pe-2 w-100 pt-2 pb-1">
+                                            <Button className="btn-blue w-100">Checkout</Button>
+                                        </div>
+                                    </Menu>
+                            </div>
                             <div className="dropdownWrapper position-relative">
                                 <Button className="rounded-circle mr-3" onClick={handleOpenMailDrop}><MdOutlineMailOutline/></Button>
                                 <Menu
@@ -178,7 +231,7 @@ const Header = () => {
                                             </MenuItem>
                                         </div>
                                         <div className="ps-2 pe-2 w-100 pt-2 pb-1">
-                                            <Button className="btn-blue w-100">View all notifications</Button>
+                                            <Button className="btn-blue w-100">View all Mail</Button>
                                         </div>
                                     </Menu>
                             </div>
